@@ -58,38 +58,38 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
   to{opacity:1;transform:translateY(0);}
 }
 .login-wrap {
-  width:100%;max-width:380px;
+  width:100%;max-width:360px;
   display:flex;flex-direction:column;align-items:center;
   animation:loginEntrance .5s cubic-bezier(.22,1,.36,1) both;
   position:relative;z-index:1;
 }
-.login-brand{text-align:center;margin-bottom:36px;}
-.login-brand-flag{font-size:42px;margin-bottom:16px;display:block;filter:none;}
-.login-brand-name{font-family:var(--font);font-size:28px;font-weight:600;color:#f5f5f7;letter-spacing:-0.3px;line-height:1.2;margin-bottom:8px;text-shadow:none;}
+.login-brand{text-align:center;margin-bottom:20px;}
+.login-brand-flag{font-size:32px;margin-bottom:8px;display:block;filter:none;}
+.login-brand-name{font-family:var(--font);font-size:24px;font-weight:600;color:#f5f5f7;letter-spacing:-0.3px;line-height:1.2;margin-bottom:4px;text-shadow:none;}
 .login-brand-tag{font-size:14px;color:rgba(255,255,255,.5);letter-spacing:0;font-weight:400;}
-.login-brand-link{display:inline-block;margin-top:10px;font-size:13px;color:#0a84ff;text-decoration:none;font-weight:500;letter-spacing:0;transition:opacity .2s;}.login-brand-link:hover{opacity:.7;}
+.login-brand-link{display:inline-block;margin-top:6px;font-size:13px;color:#0a84ff;text-decoration:none;font-weight:500;letter-spacing:0;transition:opacity .2s;}.login-brand-link:hover{opacity:.7;}
 .login-card{width:100%;background:rgba(28,28,30,.75);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%);border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 60px rgba(0,0,0,.5);}
-.login-card-top{background:transparent;padding:28px 28px 0;text-align:center;position:relative;overflow:hidden;border-bottom:none;}
+.login-card-top{background:transparent;padding:20px 24px 0;text-align:center;position:relative;overflow:hidden;border-bottom:none;}
 .login-card-top::after{display:none;}
-.login-card-top-title{font-size:20px;font-weight:600;color:#f5f5f7;margin-bottom:6px;position:relative;z-index:1;letter-spacing:-0.2px;}
-.login-card-top-sub{font-size:14px;color:rgba(255,255,255,.45);position:relative;z-index:1;font-weight:400;}
-.login-card-body{padding:24px 28px 28px;}
-.login-step-label{font-size:13px;font-weight:500;color:rgba(255,255,255,.55);text-transform:none;letter-spacing:0;margin-bottom:10px;text-align:left;display:block;}
+.login-card-top-title{font-size:17px;font-weight:600;color:#f5f5f7;margin-bottom:4px;position:relative;z-index:1;letter-spacing:-0.2px;}
+.login-card-top-sub{font-size:13px;color:rgba(255,255,255,.4);position:relative;z-index:1;font-weight:400;}
+.login-card-body{padding:18px 24px 22px;}
+.login-step-label{font-size:13px;font-weight:500;color:rgba(255,255,255,.55);text-transform:none;letter-spacing:0;margin-bottom:8px;text-align:left;display:block;}
 .login-phone-wrap{display:flex;align-items:center;border:1px solid rgba(255,255,255,.12);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);transition:border-color .2s,box-shadow .2s,background .2s;}
 .login-phone-wrap:focus-within{border-color:rgba(10,132,255,.6);box-shadow:0 0 0 3px rgba(10,132,255,.15);background:rgba(255,255,255,.08);}
 .login-phone-prefix{display:none;}
 .login-input{flex:1;padding:15px 18px;border:none;outline:none;font-family:var(--font);font-size:17px;font-weight:400;color:#f5f5f7;background:transparent;letter-spacing:0.5px;-webkit-appearance:none;min-width:0;}
 .login-input::placeholder{letter-spacing:0;font-size:15px;font-weight:400;color:rgba(255,255,255,.3);}
-.login-btn{width:100%;margin-top:18px;padding:14px;border:none;border-radius:12px;background:#0a84ff;color:#fff;font-family:var(--font);font-size:16px;font-weight:500;cursor:pointer;transition:all .2s ease;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:none;}
+.login-btn{width:100%;margin-top:14px;padding:13px;border:none;border-radius:12px;background:#0a84ff;color:#fff;font-family:var(--font);font-size:16px;font-weight:500;cursor:pointer;transition:all .2s ease;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:none;}
 .login-btn:hover{background:#409cff;transform:none;box-shadow:0 4px 16px rgba(10,132,255,.3);}
 .login-btn:active{transform:scale(.97);background:#0071e3;}
 .login-btn svg{width:16px;height:16px;flex-shrink:0;}
 .login-error{font-size:13px;color:#ff453a;margin-top:12px;min-height:20px;text-align:center;font-weight:500;background:rgba(255,69,58,.1);border-radius:8px;padding:6px 12px;display:none;}
 .login-error.show{display:block;}
-.login-features{display:flex;gap:14px;justify-content:center;margin-top:24px;flex-wrap:wrap;}
+.login-features{display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap;}
 .login-feature-chip{display:flex;align-items:center;gap:5px;padding:5px 12px;background:none;border-radius:980px;border:none;font-size:12px;font-weight:400;color:rgba(255,255,255,.4);white-space:nowrap;}
 .login-feature-chip svg{width:12px;height:12px;opacity:.85;}
-.login-footer{font-size:11px;color:rgba(255,255,255,.25);margin-top:24px;text-align:center;letter-spacing:0;position:relative;z-index:1;}
+.login-footer{font-size:11px;color:rgba(255,255,255,.25);margin-top:14px;text-align:center;letter-spacing:0;position:relative;z-index:1;}
 .pin-step-back{display:flex;align-items:center;gap:8px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.1);}
 .pin-step-back button{background:none;border:none;cursor:pointer;color:#0a84ff;font-family:var(--font);font-size:14px;font-weight:500;padding:0;display:flex;align-items:center;gap:4px;}
 .pin-phone-display{font-size:13px;font-weight:500;color:rgba(255,255,255,.7);font-family:'SF Mono',ui-monospace,monospace;margin-left:auto;background:rgba(255,255,255,.08);padding:4px 10px;border-radius:6px;}
@@ -925,11 +925,32 @@ async function launchApp(){
     document.getElementById('loading-screen').style.display='none';
     document.getElementById('app').style.display='flex';
     go(isAdmin()?'dashboard':'my-orders');
+    startInactivityWatch();
   }catch(e){
     document.getElementById('loading-msg').textContent='Connection failed. Check internet and reload.';
     document.getElementById('loading-msg').style.color='#ff3b30';
     document.querySelector('.loading-spinner').style.borderTopColor='#ff3b30';
   }
+}
+
+
+// AUTO LOGOUT - customers only, 30 min inactivity
+var inactivityTimer=null;
+function resetInactivityTimer(){
+  if(inactivityTimer)clearTimeout(inactivityTimer);
+  if(!isAdmin()&&sessionPhone){
+    inactivityTimer=setTimeout(function(){
+      toast('Session expired due to inactivity');
+      setTimeout(logout,1500);
+    },30*60*1000);
+  }
+}
+function startInactivityWatch(){
+  if(isAdmin())return;
+  ['click','touchstart','keydown','scroll','mousemove'].forEach(function(evt){
+    document.addEventListener(evt,resetInactivityTimer,{passive:true});
+  });
+  resetInactivityTimer();
 }
 
 // INIT
