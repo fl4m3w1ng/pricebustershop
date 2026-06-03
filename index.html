@@ -764,7 +764,7 @@ function renderOrderList(){
     var m=!q||(o.id||'').toLowerCase().indexOf(q)!==-1||(o.customerName||'').toLowerCase().indexOf(q)!==-1||getOrderProductNames(o).toLowerCase().indexOf(q)!==-1||(o.cargoTrackingNo||'').toLowerCase().indexOf(q)!==-1||(o.purchaseTrackingNo||'').toLowerCase().indexOf(q)!==-1||(o.customerPhone||'').indexOf(oSearch)!==-1;
     return m&&(oFilter==='all'||o.status===oFilter);
   });
-  setC('<div class="search-bar"><div class="search-wrap"><svg fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"/><path d="m11 11 3 3" stroke-linecap="round"/></svg><input class="search-input" type="text" placeholder="Search orders..." value="'+esc(oSearch)+'" oninput="oSearch=this.value;renderOrderList()"></div><select class="filter-sel" onchange="oFilter=this.value;renderOrderList()"><option value="all">All</option>'+STATUSES.map(function(s){return '<option value="'+s.key+'" '+(oFilter===s.key?'selected':'')+'>'+s.label+'</option>';}).join('')+'</select></div>'+(filtered.length===0?'<div class="empty"><div class="empty-icon">'+(orders.length===0?'📦':'🔍')+'</div><div class="empty-title">'+(orders.length===0?'No orders yet':'No results')+'</div></div>':'<div class="order-list-stack">'+filtered.map(function(o){return orderCard(o,true);}).join('')+'</div><div class="dtable-outer">'+orderTableHTML(filtered,true)+'</div>'));
+  setC('<div class="search-bar"><div class="search-wrap"><svg fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"/><path d="m11 11 3 3" stroke-linecap="round"/></svg><input class="search-input" type="text" placeholder="Search orders..." value="'+esc(oSearch)+'" oninput="oSearch=this.value;debounceRender('orders')"></div><select class="filter-sel" onchange="oFilter=this.value;renderOrderList()"><option value="all">All</option>'+STATUSES.map(function(s){return '<option value="'+s.key+'" '+(oFilter===s.key?'selected':'')+'>'+s.label+'</option>';}).join('')+'</select></div>'+(filtered.length===0?'<div class="empty"><div class="empty-icon">'+(orders.length===0?'📦':'🔍')+'</div><div class="empty-title">'+(orders.length===0?'No orders yet':'No results')+'</div></div>':'<div class="order-list-stack">'+filtered.map(function(o){return orderCard(o,true);}).join('')+'</div><div class="dtable-outer">'+orderTableHTML(filtered,true)+'</div>'));
 }
 
 function orderCard(o, admin){
@@ -878,7 +878,7 @@ function renderCustomerList(){
     return '<tr onclick="go(\'customer-detail\',customers.find(function(x){return x.fbId===\''+esc(c.fbId)+'\';}))" ><td style="font-weight:600">'+esc(c.name)+'</td><td class="mono">'+esc(c.phone||'—')+'</td><td class="muted">'+esc(c.city||'—')+'</td><td><span style="background:#f0f0f2;padding:2px 10px;border-radius:980px;font-size:12px">'+cos.length+'</span></td><td style="font-weight:600">৳'+fmt(spent)+'</td><td style="font-weight:600;color:'+(due>0?'#dc2626':'#16a34a')+'">'+(due>0?'৳'+fmt(due):'—')+'</td><td onclick="event.stopPropagation()"><div style="display:flex;gap:6px"><button class="btn btn-sm" onclick="go(\'edit-customer\',customers.find(function(x){return x.fbId===\''+esc(c.fbId)+'\';}))" >Edit</button><button class="btn btn-sm btn-danger" onclick="confirmDelCustomer(\''+esc(c.fbId)+'\',\''+esc(c.name)+'\')">Del</button></div></td></tr>';
   }).join('');
 
-  setC('<div class="search-bar"><div class="search-wrap"><svg fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"/><path d="m11 11 3 3" stroke-linecap="round"/></svg><input class="search-input" type="text" placeholder="Search customers..." value="'+esc(cSearch)+'" oninput="cSearch=this.value;renderCustomerList()"></div></div>'+(filtered.length===0?'<div class="empty"><div class="empty-icon">👤</div><div class="empty-title">'+(customers.length===0?'No customers yet':'No results')+'</div><div class="empty-desc">'+(customers.length===0?'Customers are added automatically when you create orders.':'Try a different search.')+'</div></div>':'<div class="cust-stack">'+custStackHtml+'</div><div class="dtable-cust"><div class="card"><div class="dtable-wrap"><table><thead><tr><th>Name</th><th>Phone</th><th>City</th><th>Orders</th><th>Total Spent</th><th>Due</th><th></th></tr></thead><tbody>'+custTableHtml+'</tbody></table></div></div></div>'));
+  setC('<div class="search-bar"><div class="search-wrap"><svg fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"/><path d="m11 11 3 3" stroke-linecap="round"/></svg><input class="search-input" type="text" placeholder="Search customers..." value="'+esc(cSearch)+'" oninput="cSearch=this.value;debounceRender('customers')"></div></div>'+(filtered.length===0?'<div class="empty"><div class="empty-icon">👤</div><div class="empty-title">'+(customers.length===0?'No customers yet':'No results')+'</div><div class="empty-desc">'+(customers.length===0?'Customers are added automatically when you create orders.':'Try a different search.')+'</div></div>':'<div class="cust-stack">'+custStackHtml+'</div><div class="dtable-cust"><div class="card"><div class="dtable-wrap"><table><thead><tr><th>Name</th><th>Phone</th><th>City</th><th>Orders</th><th>Total Spent</th><th>Due</th><th></th></tr></thead><tbody>'+custTableHtml+'</tbody></table></div></div></div>'));
 }
 
 function customerCard(c){
@@ -933,6 +933,27 @@ async function launchApp(){
   }
 }
 
+
+// DEBOUNCE SEARCH - prevents cursor jump on re-render
+var _searchTimer=null;
+function debounceRender(type){
+  if(_searchTimer)clearTimeout(_searchTimer);
+  _searchTimer=setTimeout(function(){
+    var activeEl=document.activeElement;
+    var cursorPos=activeEl?activeEl.selectionStart:null;
+    if(type==='orders') renderOrderList();
+    else if(type==='customers') renderCustomerList();
+    setTimeout(function(){
+      var input=document.querySelector('.search-input');
+      if(input){
+        input.focus();
+        if(cursorPos!==null){
+          try{input.setSelectionRange(cursorPos,cursorPos);}catch(e){}
+        }
+      }
+    },0);
+  },200);
+}
 
 // AUTO LOGOUT - customers only, 30 min inactivity
 var inactivityTimer=null;
